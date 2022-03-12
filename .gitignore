@@ -1,0 +1,5 @@
+
+entity_data_collection/pwd.txt
+entity_data_collection/db_config.py
+entity_data_collection/config.py
+*.pyc
