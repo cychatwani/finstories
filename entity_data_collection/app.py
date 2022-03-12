@@ -3,6 +3,7 @@ from urllib.request import Request, urlopen
 import psycopg2 
 from config import db_info, market_aux
 import re
+import time
 import argparse
  
  
@@ -146,18 +147,29 @@ page_number = args.page
 next_x_pages = args.nextxpages
 
 
+
 if page_number is not None and next_x_pages is None:
     do_job(page_number)
 
 elif next_x_pages is not None:
+    n = int(next_x_pages)
     select_script =  "SELECT * FROM metadata.entity_meta_data"
     data = get_from_database(select_script)
     last_page = max([int(x[-1]) for x in data])
-    print(data)
-    print(f"{last_page} is last page..... ")
-    # print("no not like this...")
+    # print(f"{last_page} is last page..... ")
+    if n > 20: 
+        print("not supported yet...")
+    else:
+        for i in range(1,n+1):
+            page_number = last_page + i
+            do_job(page_number)
+            time.sleep(1)
+
+
+
+    
 else:
-    print("bhai kya kar raha hai tu")
+    print("invalid way to run the script use --help for more info how to run")
 
 
 
